@@ -11,6 +11,9 @@ function App() {
       <Button variant="contained" onClick={() => setCount(count + 1)}>
         Hello World {count}
       </Button>
+      <div className="text-center">
+        <img src="https://picsum.photos/200/300" alt="random" className='rounded-full inline-block' />
+      </div>
     </>
   );
 }
