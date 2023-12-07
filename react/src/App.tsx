@@ -1,34 +1,53 @@
-import { Button } from '@mui/material';
 import './App.css'
-import { useState } from 'react';
-import { Checkbox } from '@nextui-org/checkbox';
+import { Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import { Divider, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import ProofParam from './pages/ProofParam';
+import NotFound from './pages/NotFound';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <p>Hello World!</p>
-      <Button variant="contained" onClick={() => setCount(count + 1)} sx={buttonClass}>
-        Hello World {count}
-      </Button>
-      <div className="text-center">
-        <img src="https://picsum.photos/200/300" alt="random" className='rounded-full inline-block' />
-      </div>
-      Checkbox from NextUI
-      <Checkbox defaultChecked color='danger' className='m-2 uppercase'>
-        Checkbox
-      </Checkbox>
+      <Drawer variant="permanent" anchor="right">
+        <Link to="/">
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <img
+                  src="https://avatars.githubusercontent.com/u/63006416?v=4"
+                  alt="avatar"
+                  width="50"
+                  height="50"
+                />
+              </ListItemIcon>
+              <ListItemText primary="Dylan" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Divider />
+        <Link to="/param/23">
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <img
+                  src="https://avatars.githubusercontent.com/u/63006416?v=4"
+                  alt="avatar"
+                  width="50"
+                  height="50"
+                />
+              </ListItemIcon>
+              <ListItemText primary="Dylan" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+      </Drawer>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/param/:id" element={<ProofParam />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
   );
 }
 
 export default App
-
-const buttonClass = {
-  backgroundColor: 'white',
-  color: 'gray',
-  '&:hover': {
-    backgroundColor: 'gray'
-  }
-}

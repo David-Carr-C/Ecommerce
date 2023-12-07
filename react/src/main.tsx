@@ -4,11 +4,14 @@ import App from './App.tsx'
 import './index.css'
 import 'tailwindcss/tailwind.css'
 import { NextUIProvider } from '@nextui-org/react'
+import { BrowserRouter } from 'react-router-dom'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <NextUIProvider>
-      <App />
-    </NextUIProvider>
-  </React.StrictMode>,
-)
+    <BrowserRouter>
+      <NextUIProvider>
+        <App />
+      </NextUIProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+);

@@ -34,3 +34,6 @@ npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 no hace falta @tailwind pero si:
 import 'tailwindcss/tailwind.css'
+
+for react-router:
+no se tiene que ocupar href, sino el Link con to=""
