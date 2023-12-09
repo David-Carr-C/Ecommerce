@@ -2,7 +2,7 @@ import { Card } from "@mui/material";
 import { useParams } from "react-router";
 
 export default function ProofParam() {
-  const { id } = useParams()
+  const { id } = useParams() // useParams es un hook que permite obtener los parametros de la url
 
   return (
     <>

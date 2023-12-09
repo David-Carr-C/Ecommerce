@@ -8,8 +8,8 @@ import NotFound from './pages/NotFound';
 function App() {
   return (
     <>
-      <Drawer variant="permanent" anchor="right">
-        <Link to="/">
+      <Drawer variant="permanent" anchor="right"> {/* Drawer es un menu lateral */}
+        <Link to="/"> {/* Link es un componente que permite navegar entre paginas */}
           <ListItem>
             <ListItemButton>
               <ListItemIcon>
@@ -41,9 +41,9 @@ function App() {
           </ListItem>
         </Link>
       </Drawer>
-      <Routes>
+      <Routes> {/* Aqui van las rutas, y que componente debe renderizar */}
         <Route path="/" element={<Home />} />
-        <Route path="/param/:id" element={<ProofParam />} />
+        <Route path="/param/:id" element={<ProofParam />} /> {/* :id es un parametro */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
