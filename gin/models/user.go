@@ -7,11 +7,11 @@ import (
 
 // Este es el ORM de User lo que significa que es la representacion de la tabla 'users' en la base de datos, pero en codigo
 type User struct {
-	gorm.Model
-	Name     string `gorm:"column:name" json:"name"`
-	LastName string `gorm:"column:last_name" json:"last_name"`
-	Email    string `gorm:"unique;column:email" json:"email"`
-	Password string `gorm:"column:password" json:"password"`
+	gorm.Model        // define que es una estructura de gorm
+	Name       string `gorm:"column:name" json:"name"` // define el nombre de la columna en la base de datos y el nombre de la propiedad en el json
+	LastName   string `gorm:"column:last_name" json:"last_name"`
+	Email      string `gorm:"unique;column:email" json:"email"`
+	Password   string `gorm:"column:password" json:"password"`
 }
 
 // SetPassword cifra y establece la contraseña del usuario
