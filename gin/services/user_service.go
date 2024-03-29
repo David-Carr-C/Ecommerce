@@ -33,10 +33,8 @@ func GetUserByID(c *gin.Context, db *gorm.DB, userID uint64) { // obtiene por pa
 func Login(c *gin.Context, db *gorm.DB, userEmail string, userPassword string) { // obtiene por parametro a gin, gorm, email y contraseña
 	var user models.User                                    // se crea una variable de tipo User
 	result := db.Where("email = ?", userEmail).First(&user) // se busca en la base de datos el usuario con el email especificado
-	if result.Error != nil {                                // si hay un error
-		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
-		return
-	}
+
+	handleError(http.StatusInternalServerError, c, result.Error) // maneja el error
 
 	if !user.CheckPassword(userPassword) { // se verifica la contraseña del usuario
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"}) // si la contraseña no es correcta, se retorna un mensaje de error
@@ -50,11 +48,8 @@ func Login(c *gin.Context, db *gorm.DB, userEmail string, userPassword string) {
 		Email:    user.Email,
 	}
 
-	jsonToSend, err := json.Marshal(userToSend) // se convierte el usuario a json
-	if err != nil {                             // si hay un error
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
+	jsonToSend, err := json.Marshal(userToSend)         // se convierte el usuario a json
+	handleError(http.StatusInternalServerError, c, err) // si hay error, maneja el error
 
 	cookie := http.Cookie{
 		Name:     "user",
@@ -69,7 +64,8 @@ func Login(c *gin.Context, db *gorm.DB, userEmail string, userPassword string) {
 
 	http.SetCookie(c.Writer, &cookie) // se crea una cookie con los datos del usuario
 
-	c.JSON(http.StatusOK, gin.H{"data": user}) // si no hay error, se retorna el usuario
+	// Tener cuidado pues jsonToSend es un slice de bytes, por lo que se debe convertir a string
+	c.JSON(http.StatusOK, gin.H{"data": string(jsonToSend)}) // si no hay error, se retorna el usuario
 }
 
 // CreateUser crea un nuevo usuario
@@ -122,7 +118,9 @@ func DeleteUser(c *gin.Context, db *gorm.DB, userID uint64) {
 // Obtiene por parametro el codigo de estado, gin y el error
 func handleError(statusCode int, c *gin.Context, err error) {
 	if err != nil {
+		// c.AbortWithStatusJSON(statusCode, gin.H{"error": err.Error()})
 		c.JSON(statusCode, gin.H{"error": err.Error()})
 		c.Abort()
+		panic(err)
 	}
 }
